@@ -20,7 +20,8 @@ module Slack
           initial_value: nil,
           multiline: nil,
           min_length: nil,
-          max_length: nil
+          max_length: nil,
+          dispatch_action_config: nil
         )
           @placeholder = placeholder && Composition::PlainText.new(text: placeholder, emoji: emoji)
           @initial_value = initial_value
@@ -28,6 +29,7 @@ module Slack
           @multiline = multiline
           @min_length = min_length
           @max_length = max_length
+          @dispatch_action_config = dispatch_action_config
         end
 
         def as_json(*)
@@ -38,7 +40,8 @@ module Slack
             multiline: @multiline,
             min_length: @min_length,
             max_length: @max_length,
-            initial_value: @initial_value
+            initial_value: @initial_value,
+            dispatch_action_config: @dispatch_action_config&.as_json
           }.compact
         end
       end

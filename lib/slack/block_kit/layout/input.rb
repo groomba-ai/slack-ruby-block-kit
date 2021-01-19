@@ -13,7 +13,7 @@ module Slack
         # rubocop:enable Metrics/ClassLength
         TYPE = 'input'
 
-        attr_accessor :label, :element, :block_id, :hint, :optional, :emoji
+        attr_accessor :label, :element, :block_id, :hint, :optional, :emoji, :dispatch_action
 
         def initialize(
           label:,
@@ -21,13 +21,15 @@ module Slack
           block_id: nil,
           hint: nil,
           optional: nil,
-          emoji: nil
+          emoji: nil,
+          dispatch_action: nil
         )
           @label = Composition::PlainText.new(text: label, emoji: emoji) if label
           @hint = Composition::PlainText.new(text: hint, emoji: emoji) if hint
           @block_id = block_id
           @optional = optional
           @element = element
+          @dispatch_action = dispatch_action
         end
 
         def conversation_select(placeholder:, action_id:, initial: nil, emoji: nil)
@@ -230,7 +232,8 @@ module Slack
             label: @label&.as_json,
             hint: @hint&.as_json,
             block_id: @block_id,
-            optional: optional
+            optional: optional,
+            dispatch_action: dispatch_action
           }.compact
         end
       end
